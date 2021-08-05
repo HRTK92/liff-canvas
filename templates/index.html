@@ -107,6 +107,10 @@
     })
    });
    });
+   $('#setup').click(function() {
+   	
+   });
+   });
 </script>
 {% endblock %}
 {% block title %}お絵描き{% endblock %}
@@ -115,11 +119,21 @@
    <canvas id="canvas"></canvas>
    <button id="btn" type="button" class="btn btn-primary ">送信</button>
    <button id="clear" type="button" class="btn btn-danger">クリア</button>
-   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">設定</a>
+   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SetupModal">設定
+   </button>
    <button id="share" type="button" class="btn btn-primary">共有</button>
-   <div class="collapse" id="collapseExample">
-      <div class="card card-body">
-         <div class="form-group">
+
+<div class="modal fade" id="SetupModal" tabindex="-1" aria-labelledby="SetupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="SetupModalLabel">設定</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <div class="form-group">
             <label for="number" class="control-label col-md-2">線の色</label>
             <div class="col-md-2">
                <input type="color" id="color" class="form-control form-control-color">
@@ -134,6 +148,12 @@
             </div>
          </div>
       </div>
-   </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 {% endblock %}

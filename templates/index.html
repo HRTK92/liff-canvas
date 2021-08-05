@@ -12,7 +12,7 @@
    });
    $(window).on('load', function(){
      canvas.setAttribute('width', $('.container').width());
-     canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - $('#clear').outerHeight() - 10);
+     canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
      signaturePad.clear();
      liff.init(function (data) {});
      setOptions();
@@ -43,12 +43,9 @@
                type: 'image',
                originalContentUrl: 'https://' + document.domain + '/imgs/' + res + '.jpg',
                previewImageUrl: 'https://' + document.domain + '/imgs/' + res + '_240.jpg'
-             }//,
-   //              {
-   //                type: 'text',
-   //                text: 'From:' + profile.displayName
-   //              }
+             }
            ]).then(function () {
+             
              liff.closeWindow();
            }).catch(function (error) {
              window.alert('Error sending message: ' + error.message);
@@ -70,8 +67,8 @@
    $("#color").on("change",function(){
    	setOptions();
    });
-   $("#weight").on("keyup",function(){
-   setOptions();
+   $("input[type=range]").on("input",function(){
+   	setOptions();
    });
 </script>
 {% endblock %}
@@ -79,26 +76,19 @@
 {% block content %}
 <div class="container">
    <canvas id="canvas"></canvas>
-   <button id="btn" type="button" class="btn btn-primary ">Share</button>
-   <button id="clear" type="button" class="btn btn-danger">Clear</button>
+   <button id="btn" type="button" class="btn btn-primary ">送信</button>
+   <button id="clear" type="button" class="btn btn-danger">クリア</button>
    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">設定</a>
    <div class="collapse" id="collapseExample">
       <div class="card card-body">
          <div class="form-group">
-            <label for="number" class="control-label col-md-2">文字色</label>
+            <label for="number" class="control-label col-md-2">線の色</label>
             <div class="col-md-2">
-               <select class="form-control" id="color">
-                  <option value="black">黒</option>
-                  <option value="white">白</option>
-                  <option value="red">赤</option>
-                  <option value="blue">青</option>
-                  <option value="yellow">黄</option>
-                  <option value="green">緑</option>
-               </select>
+               <input type="color" id="color" class="form-control form-control-color">
             </div>
             <label for="number" class="control-label col-md-2">線の太さ</label>
             <div class="col-md-2">
-               <input class="form-control" type="number" placeholder="文字の太さ" value="3" id="weight">
+               <input type="range" class="form-control-range" id="weight" min="1" max="20" value="2">
             </div>
          </div>
       </div>

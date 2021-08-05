@@ -1,0 +1,29 @@
+{
+  "type": "bubble",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "お絵描き",
+        "size": "xl",
+        "align": "center"
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "button",
+        "action": {
+          "type": "uri",
+          "label": "Go",
+          "uri": "https://liff.line.me/1655627652-qrdymkLQ"
+        }
+      }
+    ]
+  }
+}

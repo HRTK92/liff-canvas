@@ -7,7 +7,7 @@ from PIL import Image
 import warnings
 
 warnings.simplefilter('error', Image.DecompressionBombWarning)
-app = Flask(__name__, static_folder='imgs')
+app = Flask(__name__, static_folder='static')
 
 bootstrap = Bootstrap(app)
 
@@ -20,8 +20,8 @@ def do_get():
 @app.route('/saveimage', methods=['POST'])
 def saveimage():
 	event = request.form.to_dict()
-	dir_name = 'imgs'
-	img_name = uuid.uuid4().hex
+	dir_name = 'static/imgs'
+	img_name = f"{uuid.uuid4().hex}"
 	# Saving image in the 'imgs' folder temporarily. Should be deleted after a certain period of time
 	if not os.path.exists(dir_name):
 		os.makedirs(dir_name)
@@ -31,9 +31,9 @@ def saveimage():
 	# Needs simple validation of format for security since Pillow supports various type of Images
 	if (original.format != 'JPEG'):
 		return make_response('Unsupported image type.', 400)
-	original.thumbnail((240, 240), Image.ANTIALIAS)
-	original.save(os.path.join(dir_name, '{}_240.jpg'.format(img_name)),
-	              'JPEG')
+	#original.thumbnail((240, 240), Image.ANTIALIAS)
+	#original.save(os.path.join(dir_name, '{}_240.jpg'.format(img_name)),'JPEG')
+	#print(img_name)
 	return make_response(img_name, 200)
 
 

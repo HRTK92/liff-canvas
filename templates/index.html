@@ -1,69 +1,107 @@
 {% extends "bootstrap/base.html" %}
 {%- block metas %}
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 {%- endblock metas %}
-
 {% block scripts %}
 {{super()}}
-  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-  <script>
-    const canvas = document.querySelector('#canvas');
-    const signaturePad = new SignaturePad(canvas, {
-      backgroundColor: 'rgb(238,238,238)',
-    });
-    $(window).on('load', function(){
-      canvas.setAttribute('width', $('.container').width());
-      canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
-      signaturePad.clear();
-      liff.init(function (data) {});
-    });
-  </script>
-    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    $('#btn').on('click', function() {
-      $.ajax({
-        type: 'POST',
-        url: '/saveimage',
-        data: {
-          'image': signaturePad.toDataURL('image/jpeg')
-        },
-        success: function (res, status) {
-          liff.getProfile().then(function (profile) {
-            liff.sendMessages([
-              {
-                type: 'image',
-                originalContentUrl: 'https://' + document.domain + '/imgs/' + res + '.jpg',
-                previewImageUrl: 'https://' + document.domain + '/imgs/' + res + '_240.jpg'
-              }//,
-//              {
-//                type: 'text',
-//                text: 'From:' + profile.displayName
-//              }
-            ]).then(function () {
-              liff.closeWindow();
-            }).catch(function (error) {
-              window.alert('Error sending message: ' + error.message);
-            });
-          }).catch(function (error) {
-              window.alert("Error getting profile: " + error.message);
-          });
-        },
-        error: function (res) {
-          window.alert('Error saving image: ' + res.status);
-        },
-        complete: function(data) {
-        }
-      });
-    });
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+<script>
+   const canvas = document.querySelector('#canvas');
+   const signaturePad = new SignaturePad(canvas, {
+     backgroundColor: 'rgb(238,238,238)',
+   });
+   $(window).on('load', function(){
+     canvas.setAttribute('width', $('.container').width());
+     canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - $('#clear').outerHeight() - 10);
+     signaturePad.clear();
+     liff.init(function (data) {});
+     setOptions();
+   });
+   var setOptions = function(){
+   signaturePad.penColor=$("#color").val();
+   //signaturePad.backgroundColor=$("#bcolor").val();
+   signaturePad.minWidth=parseInt($("#weight").val());
+   signaturePad.maxWidth=parseInt($("#weight").val());
+   //signaturePad.clear();
+   console.log(signaturePad);
+   };
+</script>
+<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+   $('#btn').on('click', function() {
+     $.ajax({
+       type: 'POST',
+       url: '/saveimage',
+       data: {
+         'image': signaturePad.toDataURL('image/jpeg')
+       },
+       success: function (res, status) {
+         liff.getProfile().then(function (profile) {
+           liff.sendMessages([
+             {
+               type: 'image',
+               originalContentUrl: 'https://' + document.domain + '/imgs/' + res + '.jpg',
+               previewImageUrl: 'https://' + document.domain + '/imgs/' + res + '_240.jpg'
+             }//,
+   //              {
+   //                type: 'text',
+   //                text: 'From:' + profile.displayName
+   //              }
+           ]).then(function () {
+             liff.closeWindow();
+           }).catch(function (error) {
+             window.alert('Error sending message: ' + error.message);
+           });
+         }).catch(function (error) {
+             window.alert("Error getting profile: " + error.message);
+         });
+       },
+       error: function (res) {
+         window.alert('Error saving image: ' + res.status);
+       },
+       complete: function(data) {
+       }
+     });
+   });
+   $('#clear').click(function() {
+   	signaturePad.clear();
+   });
+   $("#color").on("change",function(){
+   	setOptions();
+   });
+   $("#weight").on("keyup",function(){
+   setOptions();
+   });
+</script>
 {% endblock %}
-
-{% block title %}お絵描き{% endblock %}
-
+{% block title %}お絵描き byはらたく{% endblock %}
 {% block content %}
 <div class="container">
-  <canvas id="canvas"></canvas>
-  <button id="btn" type="button" class="btn btn-primary btn-block">Share</button>
+   <canvas id="canvas"></canvas>
+   <button id="btn" type="button" class="btn btn-primary ">Share</button>
+   <button id="clear" type="button" class="btn btn-danger">Clear</button>
+   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">設定</a>
+   <div class="collapse" id="collapseExample">
+      <div class="card card-body">
+         <div class="form-group">
+            <label for="number" class="control-label col-md-2">文字色</label>
+            <div class="col-md-2">
+               <select class="form-control" id="color">
+                  <option value="black">黒</option>
+                  <option value="white">白</option>
+                  <option value="red">赤</option>
+                  <option value="blue">青</option>
+                  <option value="yellow">黄</option>
+                  <option value="green">緑</option>
+               </select>
+            </div>
+            <label for="number" class="control-label col-md-2">線の太さ</label>
+            <div class="col-md-2">
+               <input class="form-control" type="number" placeholder="文字の太さ" value="3" id="weight">
+            </div>
+         </div>
+      </div>
+   </div>
 </div>
 {% endblock %}

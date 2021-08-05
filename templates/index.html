@@ -1,6 +1,7 @@
 {% extends "bootstrap/base.html" %}
 {%- block metas %}
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+<meta name="description" content="https://github.com/HRTK92/liff-canvas">
 {%- endblock metas %}
 {% block scripts %}
 {{super()}}
@@ -108,7 +109,7 @@
    });
 </script>
 {% endblock %}
-{% block title %}お絵描き byはらたく{% endblock %}
+{% block title %}お絵描き{% endblock %}
 {% block content %}
 <div class="container">
    <canvas id="canvas"></canvas>

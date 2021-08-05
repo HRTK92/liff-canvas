@@ -27,7 +27,7 @@
    console.log(signaturePad);
    };
 </script>
-<!--<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>-->
+
 <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
@@ -64,7 +64,6 @@
      });
    });
    $('#clear').click(function() {
-   	$("#bcolor").value = "#eeeeee";
    	signaturePad.clear();
    });
    $("#color").on("change",function(){
@@ -110,7 +109,6 @@
    $('#setup').click(function() {
    	
    });
-   });
 </script>
 {% endblock %}
 {% block title %}お絵描き{% endblock %}
@@ -149,8 +147,7 @@
          </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
       </div>
     </div>
   </div>

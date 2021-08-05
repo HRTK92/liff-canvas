@@ -7,26 +7,27 @@
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
 <script>
    const canvas = document.querySelector('#canvas');
-   const signaturePad = new SignaturePad(canvas, {
-     backgroundColor: 'rgb(238,238,238)',
-   });
+   const signaturePad = new SignaturePad(canvas, {backgroundColor: 'rgb(238,238,238)',});
    $(window).on('load', function(){
      canvas.setAttribute('width', $('.container').width());
      canvas.setAttribute('height', window.innerHeight - $('#btn').outerHeight() - 10);
      signaturePad.clear();
-     liff.init(function (data) {});
-     setOptions();
+     liff.init({liffId: "1655627652-qrdymkLQ"});
+     setOptions(true);
    });
-   var setOptions = function(){
+   var setOptions = function(bcolor=false){
    signaturePad.penColor=$("#color").val();
-   //signaturePad.backgroundColor=$("#bcolor").val();
+   signaturePad.backgroundColor=$("#bcolor").val();
    signaturePad.minWidth=parseInt($("#weight").val());
    signaturePad.maxWidth=parseInt($("#weight").val());
-   //signaturePad.clear();
+   if (bcolor){
+   	signaturePad.clear();
+   }
    console.log(signaturePad);
    };
 </script>
-<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+<!--<script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>-->
+<script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
    $('#btn').on('click', function() {
@@ -41,8 +42,8 @@
            liff.sendMessages([
              {
                type: 'image',
-               originalContentUrl: 'https://' + document.domain + '/imgs/' + res + '.jpg',
-               previewImageUrl: 'https://' + document.domain + '/imgs/' + res + '_240.jpg'
+               originalContentUrl: 'https://' + document.domain + '/static/imgs/' + res + '.jpg',
+               previewImageUrl: 'https://' + document.domain + '/static/imgs/' + res + '.jpg'//_240
              }
            ]).then(function () {
              
@@ -62,13 +63,48 @@
      });
    });
    $('#clear').click(function() {
+   	$("#bcolor").value = "#eeeeee";
    	signaturePad.clear();
    });
    $("#color").on("change",function(){
    	setOptions();
    });
+   $("#bcolor").on("change",function(){
+   	setOptions(true);
+   });
    $("input[type=range]").on("input",function(){
    	setOptions();
+   });
+   $('#share').click(function() {
+   	$.getJSON("/static/share.json")
+   	.done(function(data) {
+   	liff.shareTargetPicker([
+    {
+      'type': 'text',
+      'text': "お絵描き\n"
+    }
+   ])
+    .then(function (res) {
+      if (res) {
+        // succeeded in sending a message through TargetPicker
+        console.log(`[${res.status}] Message sent!`)
+      } else {
+        const [majorVer, minorVer] = (liff.getLineVersion() || "").split('.');
+        if (parseInt(majorVer) == 10 && parseInt(minorVer) < 11) {
+          // LINE 10.3.0 - 10.10.0
+          // Old LINE will access here regardless of user's action
+          console.log('TargetPicker was opened at least. Whether succeeded to send message is unclear')
+        } else {
+          // LINE 10.11.0 -
+          // sending message canceled
+          console.log('TargetPicker was closed!')
+        }
+      }
+    }).catch(function (error) {
+      // something went wrong before sending a message
+      console.log('something wrong happen')
+    })
+   });
    });
 </script>
 {% endblock %}
@@ -79,6 +115,7 @@
    <button id="btn" type="button" class="btn btn-primary ">送信</button>
    <button id="clear" type="button" class="btn btn-danger">クリア</button>
    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">設定</a>
+   <button id="share" type="button" class="btn btn-primary">共有</button>
    <div class="collapse" id="collapseExample">
       <div class="card card-body">
          <div class="form-group">
@@ -89,6 +126,10 @@
             <label for="number" class="control-label col-md-2">線の太さ</label>
             <div class="col-md-2">
                <input type="range" class="form-control-range" id="weight" min="1" max="20" value="2">
+            </div>
+            <label for="number" class="control-label col-md-2">背景（非推奨）</label>
+            <div class="col-md-2">
+               <input type="color" id="bcolor" class="form-control form-control-color" value="#eeeeee">
             </div>
          </div>
       </div>

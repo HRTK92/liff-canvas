@@ -4,7 +4,12 @@
 
 ## インストール
 ```sh
-pip install -r requirements.txt```
+pip install -r requirements.txt
+```
 
 ## 使い方
-```python main.py```
+```python
+python main.py
+```
+
+![イメージ](./static/Screenshot_20210807-094808.png)

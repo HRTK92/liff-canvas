@@ -14,4 +14,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
+## 設定について
+ペンの太さや色、バックカラーを選べます。
+
 ![イメージ](./static/Screenshot_20210807-094808.png)

@@ -1,6 +1,8 @@
 # liff-canvas
-
 [![Run on repl.it](https://repl.it/badge/github/HRTK92/liff-canvas)](https://repl.it/github/HRTK92/liff-canvas}&ref=button)
+
+LINE上で絵を書くことができそのまま送信することができます。
+ペンの色や太さ、背景の色など設定することができ気軽に図など送ることができます。
 
 ## 起動方法
 

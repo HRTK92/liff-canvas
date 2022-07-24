@@ -36,7 +36,7 @@
       type: 'POST',
       url: '/saveimage',
       data: {
-        'image': signaturePad.toDataURL('image/jpeg')
+        'image': signaturePad.toDataURL('image/jpeg', 1)
       },
       success: function (res, status) {
         liff.getProfile().then(function (profile) {
@@ -123,7 +123,7 @@
   <button id="undo" type="button" class="btn btn-danger">戻る</button>
   <button id="clear" type="button" class="btn btn-danger">クリア</button>
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#SetupModal">設定</button>
-  <a id="github" class="btn btn-info" href="https://github.com/HRTK92/liff-canvas">github</a>
+  <a id="github" class="btn btn-info" href="https://github.com/HRTK92/liff-canvas">Code</a>
 
   <div class="modal fade" id="SetupModal" tabindex="-1" aria-labelledby="SetupModalLabel" aria-hidden="true">
     <div class="modal-dialog">

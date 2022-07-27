@@ -4,6 +4,8 @@
 LINE上で絵を書くことができそのまま送信することができます。
 ペンの色や太さ、背景の色など設定することができ気軽に図など送ることができます。
 
+[こちら](https://engineering.linecorp.com/ja/blog/liff-our-latest-product-for-third-party-developers/)の記事を参考に作成しました
+
 https://user-images.githubusercontent.com/70054655/181139667-8d6b02db-2d8f-4801-a712-c8a149f31bd3.mp4
 
 ## 起動方法

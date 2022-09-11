@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ### 起動
 
 ```sh
-python main.py
+python app.py
 ```
 
 ## LIFFアプリとして追加
